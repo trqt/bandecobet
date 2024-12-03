@@ -1,0 +1,12 @@
+[project]
+name = "bandecobet"
+version = "0.1.0"
+description = "BandecoBet"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.115.5",
+    "passlib[bcrypt]>=1.7.4",
+    "pyjwt[crypto]>=2.10.1",
+    "sqlmodel>=0.0.22",
+]
