@@ -83,7 +83,7 @@ async def collapse_bet(session: SessionDep,
 
     today = date.today()
 
-    stmt = select(Aposta).where(Aposta.owner_id == current_user.id).where(Aposta.resultado == False).where(Aposta.data <= today)
+    stmt = select(Aposta).where(Aposta.owner_id == current_user.id).where(Aposta.resultado is False).where(Aposta.data <= today)
     bets = session.exec(stmt).all()
 
     stmt = select(Aposta).where(Aposta.owner_id == current_user.id)
@@ -92,7 +92,6 @@ async def collapse_bet(session: SessionDep,
     if not bets:
         raise HTTPException(status_code=400, detail="You don't have any bets to finalise")
 
-    print(f"Bets:\n")
     for bet in bets:
         print(f"Bet: {bet}")
         bet.resultado = True

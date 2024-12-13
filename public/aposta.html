@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BandecoBet - Aposta do Dia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">BandecoBet</a>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="aposta.html">Apostar</a></li>
+          <li><a href="ranking.html">Ranking</a></li>
+          <button class="btn-login" onclick="location.href='login.html'">Login</button>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Seção Hero -->
+  <section class="hero">
+    <h2>Monte sua aposta do dia!</h2>
+    <p>Acerte o cardápio e ganhe prêmios incríveis.</p>
+  </section>
+
+  <!-- Formulário de Apostas -->
+  <main class="apostas">
+    <div class="container">
+      <h2>Faça sua aposta</h2>
+      <form class="apostas-form">
+        <!-- Botão para escolher entre almoço e jantar -->
+        <div class="form-group">
+          <label>Refeição:</label>
+          <div class="toggle-buttons">
+            <button type="button" id="btn-almoco" class="toggle-btn selected">Almoço</button>
+            <button type="button" id="btn-jantar" class="toggle-btn">Jantar</button>
+          </div>
+        </div>
+
+        <!-- Campo para escrever o prato -->
+        <div class="form-group">
+          <label for="prato">Prato:</label>
+          <input type="text" id="prato" name="prato" placeholder="Digite o prato principal" required>
+        </div>
+
+        <!-- Campo para digitar pontos -->
+        <div class="form-group">
+          <label for="pontos">Quantidade de Pontos:</label>
+          <input 
+            type="number" 
+            id="pontos" 
+            name="pontos" 
+            placeholder="Digite os pontos (mín. 10 - máx. 500)" 
+            min="10" 
+            max="500" 
+            step="10" 
+            value="100" 
+            required>
+        </div>
+
+        <button class="btn-cta" type="submit">Enviar Aposta</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2024 BandecoBet. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</body>
+</html>
