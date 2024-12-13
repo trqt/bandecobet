@@ -2,7 +2,7 @@ from fastapi import Depends, FastAPI
 
 from .dependencies import oauth2_scheme
 from .internal import admin
-from .routers import auth, bets, ranking, users, dishes
+from .routers import auth, bets, ranking, users, dishes, menu
 
 from .db import create_db_and_tables
 
@@ -18,6 +18,7 @@ app.include_router(users.router)
 app.include_router(bets.router)
 app.include_router(ranking.router)
 app.include_router(dishes.router)
+app.include_router(menu.router)
 app.include_router(
     admin.router,
     prefix="/admin",

@@ -8,7 +8,6 @@ from datetime import datetime, timedelta, timezone
 from jwt.exceptions import InvalidTokenError
 import jwt
 
-from app.models import Token
 from app.db import SessionDep
 
 # Fix passlib bug
