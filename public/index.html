@@ -1,72 +1,337 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BandecoBet - Sua Aposta, Nosso Jogo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>BandecoBet</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #1c1e21;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            background: #1877f2;
+            color: white;
+        }
+
+        .btn:hover {
+            background: #166fe5;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .bet-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .error {
+            color: #dc3545;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">BandecoBet</a>
-      <nav class="nav">
-        <ul>
-            <li><a href="index.html">Início</a></li>
-            <li><a href="aposta.html">Apostar</a></li>
-            <li><a href="ranking.html">Ranking</a></li>
-            <button class="btn-login" onclick="location.href='login.html'">Login</button>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-    <section class="hero">
-        <div class="container">
-            <h2>Bem-vindo ao BandecoBet</h2>
-            <p>O lugar perfeito para testar sua sorte e habilidade em apostas!</p>
-            <button class="btn-cta" onclick="location.href='cadastro.html'">Cadastre-se Agora</button>
+    <nav class="nav">
+        <h1>BandecoBet</h1>
+        <div id="nav-buttons">
+            <button class="btn" onclick="showPage('login')" id="login-nav">Login</button>
+            <button class="btn" onclick="showPage('register')" id="register-nav">Cadastro</button>
+            <button class="btn hidden" onclick="logout()" id="logout-nav">Logout</button>
         </div>
-    </section>
+    </nav>
 
-    <section id="sobre" class="sobre">
-        <div class="container">
-            <h2>Sobre Nós</h2>
-            <p>No BandecoBet, oferecemos as melhores odds e uma experiência incrível para os apostadores. Nossa plataforma é segura, intuitiva e perfeita para todos os tipos de jogadores, dos iniciantes aos experientes.</p>
-        </div>
-    </section>
-
-    <section id="apostas" class="apostas">
-        <div class="container">
-            <h2>Apostas em Destaque</h2>
-            <div class="apostas-grid">
-                <div class="aposta">
-                    <h3>Sobremesas</h3>
-                    <p>Os melhores doces e frutas com odds imperdíveis!</p>
-                </div>
-                <div class="aposta">
-                    <h3>Prato principal</h3>
-                    <p>Dispute as jogadas mais emocionantes no mundo dos pratos.</p>
-                </div>
-                <div class="aposta">
-                    <h3>Hambúrguer</h3>
-                    <p>Aposte em que dia terá hambúrguer e teste suas habilidades.</p>
-                </div>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="page">
+            <div class="card">
+                <h2>login</h2>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>N° USP</label>
+                        <input type="text" id="login-nusp" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn">login</button>
+                </form>
             </div>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 BandecoBet. Todos os direitos reservados.</p>
-            <nav class="footer-nav">
-                <ul>
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos de Uso</a></li>
-                </ul>
-            </nav>
+        <!-- Register Page -->
+        <div id="register-page" class="page hidden">
+            <div class="card">
+                <h2>register</h2>
+                <form id="register-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>N° USP</label>
+                        <input type="text" id="register-usp" required maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="register-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha</label>
+                        <input type="password" id="register-password" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn">Cadastrar-se</button>
+                </form>
+            </div>
         </div>
-    </footer>
+
+        <!-- Main App Page -->
+        <div id="main-page" class="page hidden">
+            <div class="card">
+                <h2>Menu</h2>
+                <div id="menu-container"></div>
+            </div>
+
+            <div class="card">
+                <h2>Minhas apostas</h2>
+                <div id="bets-container"></div>
+            </div>
+
+            <div class="card">
+                <h2>Ranking</h2>
+                <div id="ranking-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let token = localStorage.getItem('token');
+        const api = axios.create({
+            baseURL: '/',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Auth functions
+        async function handleLogin(e) {
+            e.preventDefault();
+            try {
+                const formData = new URLSearchParams();
+                formData.append('username', document.getElementById('login-nusp').value);
+                formData.append('password', document.getElementById('login-password').value);
+
+                const response = await api.post('/login', formData, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+                
+                token = response.data.access_token;
+                localStorage.setItem('token', token);
+                api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                showPage('main');
+                loadMainPageData();
+            } catch (error) {
+                alert('Login falhou: ' + error.response?.data?.detail || error.message);
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            try {
+                await api.post('/register', {
+                    email: document.getElementById('register-email').value,
+                    numero_usp: document.getElementById('register-usp').value,
+                    nome: document.getElementById('register-name').value,
+                    password: document.getElementById('register-password').value
+                });
+                alert('Por favor faça login!');
+                showPage('login');
+            } catch (error) {
+                alert('Cadastro falhou: ' + error.response?.data?.detail || error.message);
+            }
+        }
+
+        function logout() {
+            token = null;
+            localStorage.removeItem('token');
+            delete api.defaults.headers.common['Authorization'];
+            showPage('login');
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(`${pageId}-page`).classList.remove('hidden');
+            
+            if (pageId === 'main') {
+                document.getElementById('login-nav').classList.add('hidden');
+                document.getElementById('register-nav').classList.add('hidden');
+                document.getElementById('logout-nav').classList.remove('hidden');
+            } else {
+                document.getElementById('login-nav').classList.remove('hidden');
+                document.getElementById('register-nav').classList.remove('hidden');
+                document.getElementById('logout-nav').classList.add('hidden');
+            }
+        }
+
+        // Main page data loading
+        async function loadMainPageData() {
+            try {
+                await Promise.all([
+                    loadMenu(),
+                    loadBets(),
+                    loadRanking()
+                ]);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                if (error.response?.status === 401) {
+                    logout();
+                }
+            }
+        }
+
+        async function loadMenu() {
+            const response = await api.get('/menu/today');
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.innerHTML = response.data.map(dish => `
+                <div class="menu-item">
+                    <h3>${dish.nome}</h3>
+                    <p>${dish.descricao}</p>
+                    <div class="bet-form">
+                        <input type="number" min="1" placeholder="bet amount" id="bet-${dish.id}">
+                        <button class="btn" onclick="placeBet(${dish.id})">place bet</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadBets() {
+            const response = await api.get('/bet/');
+            const betsContainer = document.getElementById('bets-container');
+            betsContainer.innerHTML = response.data.map(bet => `
+                <div class="card">
+                    <p>bet on: ${bet.prato_id}</p>
+                    <p>amount: ${bet.valor}</p>
+                    <p>result: ${bet.resultado ? 'won' : 'pending'}</p>
+                </div>
+            `).join('');
+        }
+
+        async function loadRanking() {
+            const response = await api.get('/ranking/');
+            const rankingContainer = document.getElementById('ranking-container');
+            rankingContainer.innerHTML = response.data.map((user, index) => `
+                <div class="ranking-item">
+                    <span>#${index + 1} ${user.nome}</span>
+                    <span>${user.pontos} points (${user.taxa_acerto}% win rate)</span>
+                </div>
+            `).join('');
+        }
+
+        async function placeBet(pratoId) {
+            try {
+                const value = document.getElementById(`bet-${pratoId}`).value;
+                if (!value || value < 1) {
+                    alert('Coloque um valor válido.');
+                    return;
+                }
+
+                const today = new Date().toISOString().split('T')[0];
+                await api.post('/bet/new', null, {
+                    params: {
+                        day: today,
+                        prato_id: pratoId,
+                        value: parseInt(value)
+                    }
+                });
+
+                alert('Aposta feita!');
+                loadBets();
+            } catch (error) {
+                alert('Aposta falhou: ' + error.response?.data?.detail || error.message);
+            }
+        }
+
+        // Initial setup
+        if (token) {
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            showPage('main');
+            loadMainPageData();
+        } else {
+            showPage('login');
+        }
+    </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ router = APIRouter(
 # returns ranking
 @router.get("/", response_model=list[UsuarioRanking])
 async def read_ranking(session: SessionDep):
-    stmt = select(Usuario).order_by(Usuario.pontos).limit(20)
+    stmt = select(Usuario).order_by(Usuario.pontos.desc()).limit(20)
     rank = session.exec(stmt)
     
     return rank.all()

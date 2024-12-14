@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from starlette.responses import FileResponse
 
 from .dependencies import oauth2_scheme
 from .internal import admin
@@ -29,4 +30,4 @@ app.include_router(
 
 @app.get("/")
 async def root():
-    return {"message": "BandecoBet!"}
+    return FileResponse('public/index.html')
